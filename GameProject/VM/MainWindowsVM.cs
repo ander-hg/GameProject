@@ -93,9 +93,12 @@ namespace GameProject
 
             btnPlay = new RelayCommand((object _) =>
             {
-                HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
-                HeroInstanceWindow tela = new HeroInstanceWindow(databaseConnection, manipulatingHeroInstance);
-                tela.Show();
+                if (SelectedHero != null)
+                {
+                    HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
+                    HeroInstanceWindow tela = new HeroInstanceWindow(databaseConnection, manipulatingHeroInstance);
+                    tela.Show();
+                }
             });
         }
         

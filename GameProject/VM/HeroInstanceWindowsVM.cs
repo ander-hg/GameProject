@@ -78,48 +78,7 @@ namespace GameProject
                 _heroInstanceRepository.Update(SelectedHeroInstance);
             });
 
-            /*Play = new RelayCommand((object _) =>
-            {
-                HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
-                HeroInstanceManipulationWindow window = new HeroInstanceManipulationWindow();
-                window.DataContext = manipulatingHeroInstance;
-
-                window.Show();
-
-                _heroInstanceRepository.Insert(manipulatingHeroInstance);
-                
-            });
-
-            Edit = new RelayCommand((object _) =>
-            {
-                if (SelectedHeroInstance != null)
-                {
-                    HeroInstance manipulatingHeroInstance = new HeroInstance(
-                        new Hero(SelectedHeroInstance.Hero),
-                        SelectedHeroInstance.CurrentLevel,
-                        SelectedHeroInstance.CurrentExperience,
-                        SelectedHeroInstance.Items.ToList(),
-                        SelectedHeroInstance.Gold
-                    );
-
-                    HeroInstanceManipulationWindow window = new HeroInstanceManipulationWindow();
-                    window.DataContext = manipulatingHeroInstance;
-                    bool? dialogResult = window.ShowDialog();
-
-                    if (dialogResult.HasValue && dialogResult.Value)
-                    {
-                        SelectedHeroInstance.updateHeroInstance(manipulatingHeroInstance);
-                    }
-                }
-            });
-
-            Remove = new RelayCommand((object _) =>
-            {
-                if (SelectedHeroInstance != null)
-                {
-                    _heroInstanceRepository.Delete(SelectedHeroInstance);
-                }
-            });*/
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
