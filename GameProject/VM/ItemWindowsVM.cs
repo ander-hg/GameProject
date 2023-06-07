@@ -2,9 +2,11 @@
 using GameProject.DataAccess.Postgres;
 using GameProject.View.ManipulationWindows;
 using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GameProject
@@ -28,34 +30,26 @@ namespace GameProject
 
         public ItemWindowsVM(IItemRepository itemRepository)
         {
-            this._itemRepository = itemRepository;
-            Items = new ObservableCollection<Item>(_itemRepository.GetAll());
+            try
+            {
+                this._itemRepository = itemRepository;
+                Items = new ObservableCollection<Item>(_itemRepository.GetAll());
 
-            IniciaComandos();
+                IniciaComandos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while initializing the ItemWindowsVM: {ex.Message}");
+            }
         }
 
         public void IniciaComandos()
         {
             Add = new RelayCommand((object _) =>
             {
-                Item manipulatingItem = new Item(Id, Name, Description, Type, Attribute, Value, Cost);
-
-                ItemManipulationWindow tela = new ItemManipulationWindow();
-                tela.DataContext = manipulatingItem;
-                tela.ShowDialog();
-
-                if (tela.DialogResult.HasValue && tela.DialogResult.Value)
+                try
                 {
-                    Items.Add(manipulatingItem);
-                    _itemRepository.Insert(manipulatingItem);
-                }
-            });
-
-            Edit = new RelayCommand((object _) =>
-            {
-                if (SelectedItem != null)
-                {
-                    Item manipulatingItem = new Item(SelectedItem);
+                    Item manipulatingItem = new Item(Id, Name, Description, Type, Attribute, Value, Cost);
 
                     ItemManipulationWindow tela = new ItemManipulationWindow();
                     tela.DataContext = manipulatingItem;
@@ -63,22 +57,58 @@ namespace GameProject
 
                     if (tela.DialogResult.HasValue && tela.DialogResult.Value)
                     {
-                        SelectedItem.Name = manipulatingItem.Name;
-                        SelectedItem.Description = manipulatingItem.Description;
-                        SelectedItem.Type = manipulatingItem.Type;
-                        SelectedItem.Attribute = manipulatingItem.Attribute;
-                        SelectedItem.Value = manipulatingItem.Value;
-                        _itemRepository.Update(SelectedItem);
+                        manipulatingItem.Id = _itemRepository.Insert(manipulatingItem);
+                        Items.Add(manipulatingItem);
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while executing the 'Add' command: {ex.Message}");
+                }
+            });
+
+            Edit = new RelayCommand((object _) =>
+            {
+                try
+                {
+                    if (SelectedItem != null)
+                    {
+                        Item manipulatingItem = new Item(SelectedItem);
+
+                        ItemManipulationWindow tela = new ItemManipulationWindow();
+                        tela.DataContext = manipulatingItem;
+                        tela.ShowDialog();
+
+                        if (tela.DialogResult.HasValue && tela.DialogResult.Value)
+                        {
+                            SelectedItem.Name = manipulatingItem.Name;
+                            SelectedItem.Description = manipulatingItem.Description;
+                            SelectedItem.Type = manipulatingItem.Type;
+                            SelectedItem.Attribute = manipulatingItem.Attribute;
+                            SelectedItem.Value = manipulatingItem.Value;
+                            _itemRepository.Update(SelectedItem);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while executing the 'Edit' command: {ex.Message}");
                 }
             });
 
             Remove = new RelayCommand((object _) =>
             {
-                if (SelectedItem != null)
+                try
                 {
-                    _itemRepository.Delete(SelectedItem);
-                    Items.Remove(SelectedItem);
+                    if (SelectedItem != null)
+                    {
+                        _itemRepository.Delete(SelectedItem);
+                        Items.Remove(SelectedItem);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while executing the 'Remove' command: {ex.Message}");
                 }
             });
         }

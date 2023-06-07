@@ -21,7 +21,7 @@ namespace GameProject.DataAccess.Postgres
             throw new NotImplementedException();
         }
 
-        public void Insert(T entity)
+        public int Insert(T entity)
         {
             // Code to insert an entity into the PostgreSQL database
             throw new NotImplementedException();

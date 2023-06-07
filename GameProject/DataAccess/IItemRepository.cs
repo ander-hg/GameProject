@@ -10,7 +10,7 @@ namespace GameProject.DataAccess
     {
         Item GetById(int id);
         List<Item> GetAll();
-        void Insert(Item item);
+        int Insert(Item item);
         void Update(Item item);
         void Delete(Item item);
     }

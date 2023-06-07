@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameProject"
         mc:Ignorable="d"
         Title="HeroInstanceWindow" Height="450" Width="800">
-    <Grid Margin="0,0,0,-6">
+    <Grid Margin="0,0,0,0">
         <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
@@ -66,5 +66,12 @@
         <Button Command="{Binding btnAdd10}" Content="+10 gold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="239,190,0,0" TextWrapping="Wrap" Text="{Binding SelectedHeroInstance.Id}" VerticalAlignment="Top"/>
 
+        <ListView ItemsSource="{Binding HeroItems}" SelectedItem="{Binding SelectedItem}" HorizontalAlignment="Right" VerticalAlignment="Bottom" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,150,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

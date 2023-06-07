@@ -17,7 +17,7 @@ namespace GameProject
 {
     public class MainWindowsVM : INotifyPropertyChanged
     {
-        public IDatabaseConnection databaseConnection;  
+        public IDatabaseConnection databaseConnection;
         public ICommand btnPlay { get; private set; }
         public ICommand btnItem { get; private set; }
 
@@ -36,33 +36,28 @@ namespace GameProject
 
         public MainWindowsVM()
         {
-            this.databaseConnection = new PostgresConnection("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=sua-senha");
-            _heroRepository = new PostgresHeroRepository(databaseConnection);
-            Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
-            IniciaComandos();
+            try
+            {
+                this.databaseConnection = new PostgresConnection("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=sua-senha");
+                _heroRepository = new PostgresHeroRepository(databaseConnection);
+
+                Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
+
+                IniciaComandos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while initializing the MainWindowsVM: {ex.Message}");
+            }
         }
 
         public void IniciaComandos()
         {
             btnAdd = new RelayCommand((object _) =>
             {
-                Hero manipulatingHero = new Hero(Id, Name, Health, Mana, Attack, Defense);
-
-                HeroManipulationWindow tela = new HeroManipulationWindow();
-                tela.DataContext = manipulatingHero;
-                tela.ShowDialog();
-
-                if (tela.DialogResult.HasValue && tela.DialogResult.Value)
+                try
                 {
-                    _heroRepository.Insert(manipulatingHero);
-                    Heroes.Add(manipulatingHero);
-                }
-            });
-            btnEdit = new RelayCommand((object _) =>
-            {
-                if (SelectedHero != null)
-                {
-                    Hero manipulatingHero = new Hero(SelectedHero);
+                    Hero manipulatingHero = new Hero(Id, Name, Health, Mana, Attack, Defense);
 
                     HeroManipulationWindow tela = new HeroManipulationWindow();
                     tela.DataContext = manipulatingHero;
@@ -70,38 +65,84 @@ namespace GameProject
 
                     if (tela.DialogResult.HasValue && tela.DialogResult.Value)
                     {
-                        SelectedHero.updateHero(manipulatingHero);
-                        _heroRepository.Update(SelectedHero);
+                        manipulatingHero.Id = _heroRepository.Insert(manipulatingHero);
+                        Heroes.Add(manipulatingHero);
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while adding the hero: {ex.Message}");
+                }
+            });
+            btnEdit = new RelayCommand((object _) =>
+            {
+                try
+                {
+                    if (SelectedHero != null)
+                    {
+                        Hero manipulatingHero = new Hero(SelectedHero);
+
+                        HeroManipulationWindow tela = new HeroManipulationWindow();
+                        tela.DataContext = manipulatingHero;
+                        tela.ShowDialog();
+
+                        if (tela.DialogResult.HasValue && tela.DialogResult.Value)
+                        {
+                            SelectedHero.updateHero(manipulatingHero);
+                            _heroRepository.Update(SelectedHero);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while editing the hero: {ex.Message}");
                 }
             });
             btnRemove = new RelayCommand((object _) =>
             {
-                if (SelectedHero != null)
+                try
                 {
-                    _heroRepository.Delete(SelectedHero);
-                    Heroes.Remove(SelectedHero);
+                    if (SelectedHero != null)
+                    {
+                        _heroRepository.Delete(SelectedHero);
+                        Heroes.Remove(SelectedHero);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while editing the hero: {ex.Message}");
                 }
             });
 
             btnItem = new RelayCommand((object _) =>
             {
-                ItemWindow tela = new ItemWindow(databaseConnection);
-                tela.Show();
-
+                try
+                {
+                    ItemWindow tela = new ItemWindow(databaseConnection);
+                    tela.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while opening the item window: {ex.Message}");
+                }
             });
 
             btnPlay = new RelayCommand((object _) =>
             {
-                if (SelectedHero != null)
+                try
                 {
                     HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
                     HeroInstanceWindow tela = new HeroInstanceWindow(databaseConnection, manipulatingHeroInstance);
                     tela.Show();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             });
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void Notifica(string propertyName)

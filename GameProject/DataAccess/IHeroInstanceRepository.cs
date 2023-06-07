@@ -11,10 +11,9 @@ namespace GameProject.DataAccess
         Hero GetHero(HeroInstance hi);
         HeroInstance GetById(int id);
         List<HeroInstance> GetAll();
-        void Insert(HeroInstance hi);
-        void Insert(HeroInstance hi, ref int ad);
+        int Insert(HeroInstance hi);
         void Update(HeroInstance hi);
         void Delete(HeroInstance hi);
-        void InsertItem(HeroInstance hi, Item i, ref int id);
+        int InsertItem(HeroInstance hi, Item i);
     }
 }

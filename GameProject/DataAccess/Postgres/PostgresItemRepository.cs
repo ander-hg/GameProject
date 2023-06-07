@@ -35,12 +35,12 @@ namespace GameProject.DataAccess.Postgres
             }
         }
 
-        public void Insert(Item item)
+        public int Insert(Item item)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
                 string query = "INSERT INTO Item (Name, Description, Type, Attribute, Value, Cost) VALUES (@Name, @Description, @Type, @Attribute, @Value, @Cost)";
-                connection.Execute(query, item);
+                return connection.QuerySingle<int>(query, item);
             }
         }
 

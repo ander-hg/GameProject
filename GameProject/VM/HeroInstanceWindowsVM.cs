@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GameProject
@@ -20,8 +21,8 @@ namespace GameProject
         private IHeroInstanceRepository _heroInstanceRepository;
         public ObservableCollection<Hero> Heroes { get; set; }
         public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Item> HeroItems { get; set; }
         public int Id { get; set; }
-        public int id;
         public string Name { get; set; }
         public int Health { get; set; }
         public int Mana { get; set; }
@@ -38,47 +39,63 @@ namespace GameProject
         public Item SelectedItem { get; set; }
         int heroinstanceitemId;
 
-        public HeroInstanceWindowsVM(IHeroRepository heroRepository, IItemRepository itemRepository, IHeroInstanceRepository heroInstanceRepository, HeroInstance heroInstance)
+        public HeroInstanceWindowsVM(IItemRepository itemRepository, IHeroInstanceRepository heroInstanceRepository, HeroInstance heroInstance)
         {
             this.SelectedHeroInstance = heroInstance;
-            _heroRepository = heroRepository;
             _itemRepository = itemRepository;
             _heroInstanceRepository = heroInstanceRepository;
-            _heroInstanceRepository.Insert(SelectedHeroInstance, ref id);
-            Id = id;
-            SelectedHeroInstance.Id = id;
-            Gold = 0;
-            Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
-            Items = new ObservableCollection<Item>(_itemRepository.GetAll());
-            InitializeCommands();
+            try
+            {
+                SelectedHeroInstance.Id = Id = _heroInstanceRepository.Insert(SelectedHeroInstance);
+                Gold = 0;
+                Items = new ObservableCollection<Item>(_itemRepository.GetAll());
+                HeroItems = new ObservableCollection<Item>();
+                InitializeCommands();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while initializing the HeroInstanceWindowsVM: {ex.Message}");
+            }
         }
 
         public void InitializeCommands()
         {
             btnShop = new RelayCommand((object _) =>
             {
-                if (SelectedItem != null)
-                { 
-                    if (SelectedItem.Cost <= Gold)
-                    { 
-                        SelectedHeroInstance.Gold = Gold -= SelectedItem.Cost;
-                        _heroInstanceRepository.Update(SelectedHeroInstance);
-                        OnPropertyChanged("Gold");
-                        _heroInstanceRepository.InsertItem(SelectedHeroInstance, SelectedItem, ref heroinstanceitemId);
+                try
+                {
+                    if (SelectedItem != null)
+                    {
+                        if (SelectedItem.Cost <= Gold)
+                        {
+                            SelectedHeroInstance.Gold = Gold -= SelectedItem.Cost;
+                            OnPropertyChanged("Gold");
+                            _heroInstanceRepository.Update(SelectedHeroInstance);
+                            heroinstanceitemId = _heroInstanceRepository.InsertItem(SelectedHeroInstance, SelectedItem);
+                            HeroItems.Add(SelectedItem);
+                        }
                     }
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while executing the 'btnShop' command: {ex.Message}");
+                }
             });
 
             btnAdd10 = new RelayCommand((object _) =>
             {
-                Gold += 10;
-                SelectedHeroInstance.GainGold(10);
-                OnPropertyChanged("Gold");
-                _heroInstanceRepository.Update(SelectedHeroInstance);
+                try
+                {
+                    Gold += 10;
+                    SelectedHeroInstance.GainGold(10);
+                    OnPropertyChanged("Gold");
+                    _heroInstanceRepository.Update(SelectedHeroInstance);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while executing the 'btnAdd10' command: {ex.Message}");
+                }
             });
-
-            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

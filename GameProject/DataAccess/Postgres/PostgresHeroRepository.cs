@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GameProject.DataAccess.Postgres
 {
@@ -34,12 +36,12 @@ namespace GameProject.DataAccess.Postgres
             }
         }
 
-        public void Insert(Hero hero)
+        public int Insert(Hero hero)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
                 string query = "INSERT INTO Hero (Name, Health, Mana, Attack, Defense) VALUES (@Name, @Health, @Mana, @Attack, @Defense)";
-                connection.Execute(query, hero);
+                return connection.QuerySingle<int>(query, hero);
             }
         }
 

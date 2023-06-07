@@ -10,7 +10,7 @@ namespace GameProject.DataAccess
     {
         Hero GetById(int id);
         List<Hero> GetAll();
-        void Insert(Hero hero);
+        int Insert(Hero hero);
         void Update(Hero hero);
         void Delete(Hero hero);
         // Additional methods specific to Hero repository if needed

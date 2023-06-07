@@ -17,6 +17,7 @@ namespace GameProject
         private int value;
         private int cost;
 
+
         public Item(int id, string name, string description, string type, string attribute, int value, int cost)
         {
             this.id = id;

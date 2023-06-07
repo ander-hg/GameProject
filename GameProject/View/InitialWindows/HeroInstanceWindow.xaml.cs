@@ -24,12 +24,11 @@ namespace GameProject.View.InitialWindows
         public HeroInstanceWindow(IDatabaseConnection databaseConnection, HeroInstance heroInstance)
         {
             // Cria uma instância do repositório (PostgresItemRepository)
-            IHeroRepository heroRepository = new PostgresHeroRepository(databaseConnection);
             IItemRepository itemRepository = new PostgresItemRepository(databaseConnection);
             IHeroInstanceRepository heroInstanceRepository = new PostgresHeroInstanceRepository(databaseConnection);
 
             // Define o view model como o contexto de dados da janela
-            DataContext = new HeroInstanceWindowsVM(heroRepository, itemRepository, heroInstanceRepository, heroInstance); ;
+            DataContext = new HeroInstanceWindowsVM(itemRepository, heroInstanceRepository, heroInstance); ;
             InitializeComponent();
         }
     }

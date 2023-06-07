@@ -18,6 +18,7 @@ CREATE TABLE
     type character varying (255) NULL,
     attribute character varying (255) NULL,
     value integer NULL,
+    cost integer NULL,
     CONSTRAINT p_k PRIMARY KEY (id)
   );
 
@@ -31,16 +32,17 @@ CREATE TABLE
     targetable boolean NULL,
     attackable boolean NULL,
     hero_id serial NOT NULL,
-    CONSTRAINT heroinstance_pkey PRIMARY KEY (id);
+    CONSTRAINT heroinstance_pkey PRIMARY KEY (id),
     CONSTRAINT hero_fk FOREIGN KEY (hero_id) REFERENCES hero (id)
   );
 
 
 CREATE TABLE HeroInstanceItem (
+    id serial NOT NULL,
     hero_instance_id INT,
     item_id INT,
     -- outras colunas relacionadas ao relacionamento entre HeroInstance e Item, se necessário
-    PRIMARY KEY (hero_instance_id, item_id),
+    PRIMARY KEY (id, hero_instance_id, item_id),
     FOREIGN KEY (hero_instance_id) REFERENCES HeroInstance(id),
     FOREIGN KEY (item_id) REFERENCES Item(id)
 );
