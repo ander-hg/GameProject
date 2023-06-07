@@ -1,4 +1,5 @@
-﻿using GameProject.View.ManipulationWindows;
+﻿using GameProject.DataAccess;
+using GameProject.View.ManipulationWindows;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -14,70 +15,79 @@ namespace GameProject
 {
     public class HeroInstanceWindowsVM : INotifyPropertyChanged
     {
-        public ObservableCollection<HeroInstance> HeroInstances { get; set; }
-        public ICommand Add { get; private set; }
+        private readonly IHeroRepository _heroRepository;
+        private readonly IItemRepository _itemRepository;
+        private IHeroInstanceRepository _heroInstanceRepository;
+        public ObservableCollection<Hero> Heroes { get; set; }
+        public ObservableCollection<Item> Items { get; set; }
+        public int Id { get; set; }
+        public int id;
+        public string Name { get; set; }
+        public int Health { get; set; }
+        public int Mana { get; set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int Gold { get; set; }
+        public ICommand Play { get; private set; }
         public ICommand Remove { get; private set; }
         public ICommand Edit { get; private set; }
+        public ICommand btnShop { get; private set; }
+        public ICommand btnAdd10 { get; private set; }
         public HeroInstance SelectedHeroInstance { get; set; }
-        
-        public HeroInstanceWindowsVM()
+        public Hero SelectedHero { get; set; }
+        public Item SelectedItem { get; set; }
+        int heroinstanceitemId;
+
+        public HeroInstanceWindowsVM(IHeroRepository heroRepository, IItemRepository itemRepository, IHeroInstanceRepository heroInstanceRepository, HeroInstance heroInstance)
         {
-            HeroInstances = new ObservableCollection<HeroInstance>();
-
-            string connectionString = "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=sua-senha";
-            // Cria a conexão com o banco de dados
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                connection.Open();
-
-                // Cria o comando SQL para selecionar todas as instâncias de herói
-                string query = "SELECT * FROM HeroInstance";
-
-                // Cria o objeto NpgsqlCommand com a consulta SQL e a conexão
-                using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
-                {
-                    // Executa a consulta e obtém o resultado
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            // Recupera os valores das colunas da instância de herói
-                            int id = reader.GetInt32(0);
-                            int currentLevel = reader.GetInt32(1);
-                            int currentExperience = reader.GetInt32(2);
-                            int gold = reader.GetInt32(3);
-                            int heroId = reader.GetInt32(4);
-                            bool targetable = reader.GetBoolean(5);
-                            bool attackable = reader.GetBoolean(6);
-
-                            // Crie um objeto HeroInstance com os valores recuperados
-                            //HeroInstances.Add(new HeroInstance(heroId, currentExperience, gold, heroId));
-
-                        }
-                    }
-                }
-            }
-            HeroInstances = new ObservableCollection<HeroInstance>() {
-                new HeroInstance(new Hero(), 1, 0, new List<Item>(), 0)
-            };
-
+            this.SelectedHeroInstance = heroInstance;
+            _heroRepository = heroRepository;
+            _itemRepository = itemRepository;
+            _heroInstanceRepository = heroInstanceRepository;
+            _heroInstanceRepository.Insert(SelectedHeroInstance, ref id);
+            Id = id;
+            SelectedHeroInstance.Id = id;
+            Gold = 0;
+            Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
+            Items = new ObservableCollection<Item>(_itemRepository.GetAll());
             InitializeCommands();
         }
 
         public void InitializeCommands()
         {
-            Add = new RelayCommand((object _) =>
+            btnShop = new RelayCommand((object _) =>
             {
-                HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(), 1, 0, new List<Item>(), 0);
+                if (SelectedItem != null)
+                { 
+                    if (SelectedItem.Cost <= Gold)
+                    { 
+                        SelectedHeroInstance.Gold = Gold -= SelectedItem.Cost;
+                        _heroInstanceRepository.Update(SelectedHeroInstance);
+                        OnPropertyChanged("Gold");
+                        _heroInstanceRepository.InsertItem(SelectedHeroInstance, SelectedItem, ref heroinstanceitemId);
+                    }
+                }
 
+            });
+
+            btnAdd10 = new RelayCommand((object _) =>
+            {
+                Gold += 10;
+                SelectedHeroInstance.GainGold(10);
+                OnPropertyChanged("Gold");
+                _heroInstanceRepository.Update(SelectedHeroInstance);
+            });
+
+            /*Play = new RelayCommand((object _) =>
+            {
+                HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
                 HeroInstanceManipulationWindow window = new HeroInstanceManipulationWindow();
                 window.DataContext = manipulatingHeroInstance;
-                bool? dialogResult = window.ShowDialog();
 
-                if (dialogResult.HasValue && dialogResult.Value)
-                {
-                    HeroInstances.Add(manipulatingHeroInstance);
-                }
+                window.Show();
+
+                _heroInstanceRepository.Insert(manipulatingHeroInstance);
+                
             });
 
             Edit = new RelayCommand((object _) =>
@@ -85,7 +95,7 @@ namespace GameProject
                 if (SelectedHeroInstance != null)
                 {
                     HeroInstance manipulatingHeroInstance = new HeroInstance(
-                        new Hero(SelectedHeroInstance.Hero.Name, SelectedHeroInstance.Hero.Health, SelectedHeroInstance.Hero.Mana, SelectedHeroInstance.Hero.Attack, SelectedHeroInstance.Hero.Defense),
+                        new Hero(SelectedHeroInstance.Hero),
                         SelectedHeroInstance.CurrentLevel,
                         SelectedHeroInstance.CurrentExperience,
                         SelectedHeroInstance.Items.ToList(),
@@ -107,9 +117,9 @@ namespace GameProject
             {
                 if (SelectedHeroInstance != null)
                 {
-                    HeroInstances.Remove(SelectedHeroInstance);
+                    _heroInstanceRepository.Delete(SelectedHeroInstance);
                 }
-            });
+            });*/
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

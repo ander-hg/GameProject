@@ -10,11 +10,13 @@
         <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,61">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
                     <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Attribute" DisplayMemberBinding="{Binding Attribute}"/>
                     <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}"/>
+                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -9,14 +9,16 @@ namespace GameProject
 {
     public class Hero : INotifyPropertyChanged
     {
+        private int id;
         private string name;
         private int health;
         private int mana;
         private int attack;
         private int defense;
 
-        public Hero(string name, int health, int mana, int attack, int defense)
+        public Hero(int id, string name, int health, int mana, int attack, int defense)
         {
+            this.id = id;
             this.name = name;
             this.health = health;
             this.mana = mana;
@@ -24,7 +26,30 @@ namespace GameProject
             this.defense = defense;
         }
 
+        public Hero(Hero h)
+        {
+            this.id = h.id;
+            this.name = h.Name;
+            this.health = h.Health;
+            this.mana = h.Mana;
+            this.attack = h.Attack;
+            this.defense = h.Defense;
+        }
+
         public Hero() { }
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    OnPropertyChanged(nameof(Id));
+                }
+            }
+        }
 
         public string Name
         {

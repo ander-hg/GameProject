@@ -16,16 +16,16 @@ namespace GameProject.DataAccess.Postgres
             this.databaseConnection = databaseConnection;
         }
 
-        public Hero GetHeroById(int id)
+        public Hero GetById(int id)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
-                string query = "SELECT * FROM Hero WHERE Id = @Id";
+                string query = "SELECT * FROM Hero WHERE id = @Id";
                 return connection.QueryFirstOrDefault<Hero>(query, new { Id = id });
             }
         }
 
-        public List<Hero> GetAllHeroes()
+        public List<Hero> GetAll()
         {
             using (var connection = databaseConnection.CreateConnection())
             {
@@ -34,7 +34,7 @@ namespace GameProject.DataAccess.Postgres
             }
         }
 
-        public void AddHero(Hero hero)
+        public void Insert(Hero hero)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
@@ -43,42 +43,22 @@ namespace GameProject.DataAccess.Postgres
             }
         }
 
-        public void UpdateHero(Hero hero)
+        public void Update(Hero hero)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
-                string query = "UPDATE Hero SET Name = @Name, Health = @Health, Mana = @Mana, Attack = @Attack, Defense = @Defense WHERE Id = @Id";
+                string query = "UPDATE Hero SET Name = @Name, Health = @Health, Mana = @Mana, Attack = @Attack, Defense = @Defense WHERE id = @Id";
                 connection.Execute(query, hero);
             }
         }
 
-        public void DeleteHero(int id)
+        public void Delete(Hero hero)
         {
             using (var connection = databaseConnection.CreateConnection())
             {
-                string query = "DELETE FROM Hero WHERE Id = @Id";
-                connection.Execute(query, new { Id = id });
+                string query = "DELETE FROM Hero WHERE id = @Id";
+                connection.Execute(query, new { Id = hero.Id });
             }
-        }
-
-        public Hero GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Hero entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Hero entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Hero entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -119,9 +119,6 @@
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Hero.cs" />
     <Compile Include="Model\HeroInstance.cs" />
-    <Compile Include="View\ManipulationWindows\HeroInstanceManipulationWindow.xaml.cs">
-      <DependentUpon>HeroInstanceManipulationWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\InitialWindows\HeroInstanceWindow.xaml.cs">
       <DependentUpon>HeroInstanceWindow.xaml</DependentUpon>
     </Compile>
@@ -129,10 +126,6 @@
     <Compile Include="View\ManipulationWindows\HeroManipulationWindow.xaml.cs">
       <DependentUpon>HeroManipulationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InitialWindows\HeroWindow.xaml.cs">
-      <DependentUpon>HeroWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="VM\HeroWindowsVM.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="View\ManipulationWindows\ItemManipulationWindow.xaml.cs">
       <DependentUpon>ItemManipulationWindow.xaml</DependentUpon>
@@ -143,19 +136,11 @@
     <Compile Include="VM\ItemWindowsVM.cs" />
     <Compile Include="VM\MainWindowsVM.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Page Include="View\ManipulationWindows\HeroInstanceManipulationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\InitialWindows\HeroInstanceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ManipulationWindows\HeroManipulationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\InitialWindows\HeroWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -207,7 +192,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="DataAccess\db.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

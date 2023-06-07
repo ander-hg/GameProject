@@ -25,9 +25,13 @@ namespace GameProject
     {
         public MainWindow()
         {
-            IDatabaseConnection databaseConnection = new PostgresConnection("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=sua-senha");
-            DataContext = new MainWindowsVM(databaseConnection);
+            DataContext = new MainWindowsVM();
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

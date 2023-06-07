@@ -11,14 +11,16 @@ namespace GameProject
 {
     public class ItemWindowsVM : INotifyPropertyChanged
     {
-        private readonly IItemRepository itemRepository;
+        private readonly IItemRepository _itemRepository;
 
         public ObservableCollection<Item> Items { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
         public string Attribute { get; set; }
         public int Value { get; set; }
+        public int Cost { get; set; }
         public ICommand Add { get; private set; }
         public ICommand Remove { get; private set; }
         public ICommand Edit { get; private set; }
@@ -26,8 +28,8 @@ namespace GameProject
 
         public ItemWindowsVM(IItemRepository itemRepository)
         {
-            this.itemRepository = itemRepository;
-            Items = new ObservableCollection<Item>(itemRepository.GetAllItems());
+            this._itemRepository = itemRepository;
+            Items = new ObservableCollection<Item>(_itemRepository.GetAll());
 
             IniciaComandos();
         }
@@ -36,7 +38,7 @@ namespace GameProject
         {
             Add = new RelayCommand((object _) =>
             {
-                Item manipulatingItem = new Item(Name, Description, Type, Attribute, Value);
+                Item manipulatingItem = new Item(Id, Name, Description, Type, Attribute, Value, Cost);
 
                 ItemManipulationWindow tela = new ItemManipulationWindow();
                 tela.DataContext = manipulatingItem;
@@ -45,7 +47,7 @@ namespace GameProject
                 if (tela.DialogResult.HasValue && tela.DialogResult.Value)
                 {
                     Items.Add(manipulatingItem);
-                    itemRepository.AddItem(manipulatingItem);
+                    _itemRepository.Insert(manipulatingItem);
                 }
             });
 
@@ -53,7 +55,7 @@ namespace GameProject
             {
                 if (SelectedItem != null)
                 {
-                    Item manipulatingItem = new Item(SelectedItem.Name, SelectedItem.Description, SelectedItem.Type, SelectedItem.Attribute, SelectedItem.Value);
+                    Item manipulatingItem = new Item(SelectedItem);
 
                     ItemManipulationWindow tela = new ItemManipulationWindow();
                     tela.DataContext = manipulatingItem;
@@ -66,7 +68,7 @@ namespace GameProject
                         SelectedItem.Type = manipulatingItem.Type;
                         SelectedItem.Attribute = manipulatingItem.Attribute;
                         SelectedItem.Value = manipulatingItem.Value;
-                        itemRepository.UpdateItem(SelectedItem);
+                        _itemRepository.Update(SelectedItem);
                     }
                 }
             });
@@ -75,8 +77,8 @@ namespace GameProject
             {
                 if (SelectedItem != null)
                 {
+                    _itemRepository.Delete(SelectedItem);
                     Items.Remove(SelectedItem);
-                    itemRepository.DeleteItem(SelectedItem.Id);
                 }
             });
         }

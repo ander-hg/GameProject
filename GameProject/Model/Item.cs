@@ -9,32 +9,55 @@ namespace GameProject
 {
     public class Item : INotifyPropertyChanged
     {
-        public int id;
+        private int id;
         private string name;
         private string description;
         private string type;
         private string attribute;
         private int value;
+        private int cost;
 
-        public Item(string name, string description, string type, string attribute, int value)
+        public Item(int id, string name, string description, string type, string attribute, int value, int cost)
         {
+            this.id = id;
             this.name = name;
             this.description = description;
             this.type = type;
             this.attribute = attribute;
             this.value = value;
+            this.cost = cost;
+        }
+        public Item(string name, string description, string type, string attribute, int value, int id, int cost)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.type = type;
+            this.attribute = attribute;
+            this.value = value;
+            this.cost = cost;
+        }
+
+        public Item(Item i)
+        {
+            this.id = i.id;
+            this.name = i.Name;
+            this.description = i.Description;
+            this.type = i.Type;
+            this.attribute = i.Attribute;
+            this.value = i.Value;
         }
 
         public int Id
-        {
-            get { return id; }
-            set
-            {
-                if (id != value)
-                {
+        { 
+            get { return id; } 
+            set 
+            { 
+                if (id != value) 
+                {   
                     id = value;
                     OnPropertyChanged(nameof(Id));
-                }
+                } 
             }
         }
 
@@ -99,6 +122,19 @@ namespace GameProject
                 {
                     this.value = value;
                     OnPropertyChanged(nameof(Value));
+                }
+            }
+        }
+
+        public int Cost
+        {
+            get { return cost; }
+            set
+            {
+                if (this.cost != value)
+                {
+                    this.cost = value;
+                    OnPropertyChanged(nameof(Cost));
                 }
             }
         }

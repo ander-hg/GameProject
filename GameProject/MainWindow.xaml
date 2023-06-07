@@ -7,10 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Button Command="{Binding btnItem}" Content="Item" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-            <Button Command="{Binding btnPlay}" Content="Gameplay" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-            <Button Command="{Binding btnHero}" Content="Hero" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
-        </StackPanel>
+        <ListView ItemsSource="{Binding Heroes}" SelectedItem="{Binding SelectedHero}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,61">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}"/>
+                    <GridViewColumn Header="Health" DisplayMemberBinding="{Binding Health}"/>
+                    <GridViewColumn Header="Mana" DisplayMemberBinding="{Binding Mana}"/>
+                    <GridViewColumn Header="Attack" DisplayMemberBinding="{Binding Attack}"/>
+                    <GridViewColumn Header="Defense" DisplayMemberBinding="{Binding Defense}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Command="{Binding btnItem}" Content="Item" HorizontalAlignment="Right" Margin="0,385,40,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding btnPlay}" Content="Play" HorizontalAlignment="Center" Margin="0,385,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding btnAdd}" Content="Add" HorizontalAlignment="Left" Margin="48,385,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding btnEdit}" Content="Edit" HorizontalAlignment="Left" Margin="127,385,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding btnRemove}" Content="Remove" HorizontalAlignment="Left" Margin="206,385,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

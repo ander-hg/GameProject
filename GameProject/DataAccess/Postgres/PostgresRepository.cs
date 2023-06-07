@@ -38,5 +38,10 @@ namespace GameProject.DataAccess.Postgres
             // Code to delete an entity from the PostgreSQL database
             throw new NotImplementedException();
         }
+
+        public List<T> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

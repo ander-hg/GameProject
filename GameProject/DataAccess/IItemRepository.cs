@@ -8,10 +8,10 @@ namespace GameProject.DataAccess
 {
     public interface IItemRepository : IRepository<Item>
     {
-        Item GetItemById(int id);
-        List<Item> GetAllItems();
-        void AddItem(Item item);
-        void UpdateItem(Item item);
-        void DeleteItem(int id);
+        Item GetById(int id);
+        List<Item> GetAll();
+        void Insert(Item item);
+        void Update(Item item);
+        void Delete(Item item);
     }
 }

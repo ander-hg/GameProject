@@ -8,6 +8,13 @@ namespace GameProject.DataAccess
 {
     public interface IHeroInstanceRepository : IRepository<HeroInstance>
     {
-        // Additional methods specific to HeroInstance repository if needed
+        Hero GetHero(HeroInstance hi);
+        HeroInstance GetById(int id);
+        List<HeroInstance> GetAll();
+        void Insert(HeroInstance hi);
+        void Insert(HeroInstance hi, ref int ad);
+        void Update(HeroInstance hi);
+        void Delete(HeroInstance hi);
+        void InsertItem(HeroInstance hi, Item i, ref int id);
     }
 }

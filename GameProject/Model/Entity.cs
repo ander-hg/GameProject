@@ -9,8 +9,8 @@ namespace GameProject
 {
     public abstract class Entity : INotifyPropertyChanged
     {
-        private bool targetable;
-        private bool attackable;
+        private bool targetable = true;
+        private bool attackable = true;
 
         public bool Targetable
         {

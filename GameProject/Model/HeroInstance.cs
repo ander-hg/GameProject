@@ -9,13 +9,14 @@ namespace GameProject
 {
     public class HeroInstance : Entity
     {
+        private int id;
         private Hero hero;
         private int currentLevel;
         private int currentExperience;
         private List<Item> items;
         private int gold;
 
-        public HeroInstance(Hero hero, int currentLevel, int currentExperience, List<Item> items, int gold)
+        public HeroInstance(Hero hero, int currentLevel = 1, int currentExperience = 0, List<Item> items = null, int gold = 0)
         {
             this.hero = hero;
             this.currentLevel = currentLevel;
@@ -24,6 +25,19 @@ namespace GameProject
             this.gold = gold;
             this.Targetable = true;
             this.Attackable = true;
+        }
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    OnPropertyChanged(nameof(Id));
+                }
+            }
         }
 
         public Hero Hero
@@ -109,6 +123,12 @@ namespace GameProject
             OnPropertyChanged(nameof(CurrentExperience));
         }
 
+        public void GainGold(int amount)
+        {
+            gold += amount;
+            OnPropertyChanged(nameof(Gold));
+        }
+
         public void LevelUp()
         {
             // Lógica para aumentar o nível do herói
@@ -133,8 +153,8 @@ namespace GameProject
             this.CurrentExperience = instance.CurrentExperience;
             this.Items = instance.Items;
             this.Gold = instance.Gold;
-            // this.Targetable = instance.Targetable;
-            // this.Attackable = instance.Attackable;
+            this.Targetable = instance.Targetable;
+            this.Attackable = instance.Attackable;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
