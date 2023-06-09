@@ -119,6 +119,7 @@
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Hero.cs" />
     <Compile Include="Model\HeroInstance.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
     <Compile Include="View\InitialWindows\HeroInstanceWindow.xaml.cs">
       <DependentUpon>HeroInstanceWindow.xaml</DependentUpon>
     </Compile>

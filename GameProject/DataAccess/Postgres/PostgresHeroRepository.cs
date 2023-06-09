@@ -40,7 +40,7 @@ namespace GameProject.DataAccess.Postgres
         {
             using (var connection = databaseConnection.CreateConnection())
             {
-                string query = "INSERT INTO Hero (Name, Health, Mana, Attack, Defense) VALUES (@Name, @Health, @Mana, @Attack, @Defense)";
+                string query = "INSERT INTO Hero (Name, Health, Mana, Attack, Defense) VALUES (@Name, @Health, @Mana, @Attack, @Defense)  RETURNING id;";
                 return connection.QuerySingle<int>(query, hero);
             }
         }

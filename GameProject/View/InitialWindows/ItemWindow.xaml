@@ -5,24 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameProject.View.InitialWindows"
         mc:Ignorable="d"
-        Title="ItemWindow" Height="450" Width="800">
+        Title="ItemWindow" WindowState="Maximized" Background="#222222" d:DesignHeight="1095.26" d:DesignWidth="1189">
     <Grid>
-        <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,61">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
-                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
-                    <GridViewColumn Header="Attribute" DisplayMemberBinding="{Binding Attribute}"/>
-                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}"/>
-                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Command="{Binding Add}" Content="Add" HorizontalAlignment="Left" Margin="48,385,0,0" VerticalAlignment="Top"/>
-        <Button Command="{Binding Edit}" Content="Edit" HorizontalAlignment="Left" Margin="127,385,0,0" VerticalAlignment="Top"/>
-        <Button Command="{Binding Remove}" Content="Remove" HorizontalAlignment="Left" Margin="206,385,0,0" VerticalAlignment="Top"/>
+        <ListBox Grid.Row="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" Foreground="White" FontSize="16"/>
+                        <TextBlock Text="{Binding Id}" Visibility="Hidden"/>
+                        <Image Source="{Binding ImageSource}" Width="100" Height="100"/>
+                        <StackPanel Grid.Column="1" Margin="10">
 
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Description:" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="{Binding Description}" Foreground="White" FontSize="14" Margin="4,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Type:" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="{Binding Type}" Foreground="White" FontSize="14" Margin="4,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Attribute:" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="{Binding Attribute}" Foreground="White" FontSize="14" Margin="4,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Value:" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="{Binding Value}" Foreground="White" FontSize="14" Margin="4,4,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Cost:" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="{Binding Cost}" Foreground="White" FontSize="14" Margin="4,4,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20">
+            <Button Command="{Binding Add}" Content="Add" Margin="5" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White"/>
+            <Button Command="{Binding Edit}" Content="Edit" Margin="5" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White"/>
+            <Button Command="{Binding Remove}" Content="Remove" Margin="5" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -57,7 +57,7 @@ namespace GameProject
             {
                 try
                 {
-                    Hero manipulatingHero = new Hero(Id, Name, Health, Mana, Attack, Defense);
+                    Hero manipulatingHero = new Hero(Id=0, Name="name", Health=100, Mana=50, Attack=10, Defense = 0);
 
                     HeroManipulationWindow tela = new HeroManipulationWindow();
                     tela.DataContext = manipulatingHero;
@@ -131,6 +131,9 @@ namespace GameProject
             {
                 try
                 {
+                    if (SelectedHero == null) {
+                        throw new Exception("No hero selected");
+                    }
                     HeroInstance manipulatingHeroInstance = new HeroInstance(new Hero(SelectedHero), 1, 0, new List<Item>(), 0);
                     HeroInstanceWindow tela = new HeroInstanceWindow(databaseConnection, manipulatingHeroInstance);
                     tela.Show();

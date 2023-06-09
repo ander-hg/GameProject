@@ -5,20 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameProject.View.ManipulationWindows"
         mc:Ignorable="d"
-        Title="HeroManipulationWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="425">
-            <Label Content="Name:"/>
-            <TextBox Margin="0,0,0,10" Text="{Binding Name}"/>
-            <Label Content="Health:"/>
-            <TextBox Margin="0,0,0,10" Text="{Binding Health}"/>
-            <Label Content="Mana:"/>
-            <TextBox Margin="0,0,0,10" Text="{Binding Mana}"/>
-            <Label Content="Attack:"/>
-            <TextBox Margin="0,0,0,10" Text="{Binding Attack}"/>
-            <Label Content="Defense:"/>
-            <TextBox Margin="0,0,0,10" Text="{Binding Defense}"/>
-            <Button Content="Save" HorizontalAlignment="Center" Margin="0,20,0,20" VerticalAlignment="Top" Click="bnt_Save" Width="150" Grid.ColumnSpan="2"/>
+        Title="HeroManipulationWindow" WindowState="Maximized">
+    <Grid Background="#222222">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#FF8000" Margin="0,0,0,0">
+            <TextBlock Text="Hero Manipulation" Foreground="White" FontSize="24" HorizontalAlignment="Center" Padding="20"/>
+        </Border>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Margin" Value="0,0,10,9"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Padding" Value="5"/>
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Background" Value="#FF8000"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Margin" Value="0,20,0,20"/>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                
+
+                <StackPanel HorizontalAlignment="Right" Margin="0,0,0,10">
+                    <Label Content="Name:"/>
+                    <Label Content="Health:"/>
+                    <Label Content="Mana:"/>
+                    <Label Content="Attack:"/>
+                    <Label Content="Defense:"/>
+                </StackPanel>
+
+                <StackPanel  HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <TextBox Text="{Binding Name}"/>
+                    <TextBox Text="{Binding Health}"/>
+                    <TextBox Text="{Binding Mana}"/>
+                    <TextBox Text="{Binding Attack}"/>
+                    <TextBox Text="{Binding Defense}"/>
+                </StackPanel>
+
+            </StackPanel>
+            <Button Content="Save" Click="bnt_Save" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Window>
