@@ -31,8 +31,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while getting the hero: {ex.Message}");
-                return null;
+                throw ex;
             }
         }
 
@@ -48,8 +47,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while getting the hero instance by ID: {ex.Message}");
-                return null;
+                throw ex;
             }
         }
 
@@ -65,8 +63,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while getting all hero instances: {ex.Message}");
-                return new List<HeroInstance>();
+                throw ex;
             }
         }
 
@@ -112,7 +109,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while updating the hero instance: {ex.Message}");
+                throw ex;
             }
         }
 
@@ -134,7 +131,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while deleting the hero instance: {ex.Message}");
+                throw ex;
             }
         }
 
@@ -158,8 +155,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while inserting the hero instance item: {ex.Message}");
-                return -1;
+                throw ex;
             }
         }
     }
