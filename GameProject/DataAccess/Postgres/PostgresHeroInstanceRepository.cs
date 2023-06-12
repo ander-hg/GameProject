@@ -96,8 +96,7 @@ namespace GameProject.DataAccess.Postgres
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while inserting the hero instance and retrieving the ID: {ex.Message}");
-                return -1;
+                throw ex;
             }
         }
 

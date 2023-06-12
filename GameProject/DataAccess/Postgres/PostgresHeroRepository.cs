@@ -20,46 +20,81 @@ namespace GameProject.DataAccess.Postgres
 
         public Hero GetById(int id)
         {
-            using (var connection = databaseConnection.CreateConnection())
+            try
             {
-                string query = "SELECT * FROM Hero WHERE id = @Id";
-                return connection.QueryFirstOrDefault<Hero>(query, new { Id = id });
+                using (var connection = databaseConnection.CreateConnection())
+                {
+                    string query = "SELECT * FROM Hero WHERE id = @Id";
+                    return connection.QueryFirstOrDefault<Hero>(query, new { Id = id });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public List<Hero> GetAll()
         {
-            using (var connection = databaseConnection.CreateConnection())
+            try
             {
-                string query = "SELECT * FROM Hero";
-                return connection.Query<Hero>(query).ToList();
+                using (var connection = databaseConnection.CreateConnection())
+                {
+                    string query = "SELECT * FROM Hero";
+                    return connection.Query<Hero>(query).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public int Insert(Hero hero)
         {
-            using (var connection = databaseConnection.CreateConnection())
+            try
             {
-                string query = "INSERT INTO Hero (Name, Health, Mana, Attack, Defense) VALUES (@Name, @Health, @Mana, @Attack, @Defense)  RETURNING id;";
-                return connection.QuerySingle<int>(query, hero);
+                using (var connection = databaseConnection.CreateConnection())
+                {
+                    string query = "INSERT INTO Hero (Name, Health, Mana, Attack, Defense) VALUES (@Name, @Health, @Mana, @Attack, @Defense)  RETURNING id;";
+                    return connection.QuerySingle<int>(query, hero);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public void Update(Hero hero)
         {
-            using (var connection = databaseConnection.CreateConnection())
+            try
             {
-                string query = "UPDATE Hero SET Name = @Name, Health = @Health, Mana = @Mana, Attack = @Attack, Defense = @Defense WHERE id = @Id";
-                connection.Execute(query, hero);
+                using (var connection = databaseConnection.CreateConnection())
+                {
+                    string query = "UPDATE Hero SET Name = @Name, Health = @Health, Mana = @Mana, Attack = @Attack, Defense = @Defense WHERE id = @Id";
+                    connection.Execute(query, hero);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public void Delete(Hero hero)
         {
-            using (var connection = databaseConnection.CreateConnection())
+            try
             {
-                string query = "DELETE FROM Hero WHERE id = @Id";
-                connection.Execute(query, new { Id = hero.Id });
+                using (var connection = databaseConnection.CreateConnection())
+                {
+                    string query = "DELETE FROM Hero WHERE id = @Id";
+                    connection.Execute(query, new { Id = hero.Id });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

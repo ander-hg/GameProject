@@ -66,7 +66,8 @@ namespace GameProject
                     if (tela.DialogResult.HasValue && tela.DialogResult.Value)
                     {
                         manipulatingHero.Id = _heroRepository.Insert(manipulatingHero);
-                        Heroes.Add(manipulatingHero);
+                        Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
+                        Notifica(nameof(Heroes));
                     }
                 }
                 catch (Exception ex)
@@ -105,7 +106,8 @@ namespace GameProject
                     if (SelectedHero != null)
                     {
                         _heroRepository.Delete(SelectedHero);
-                        Heroes.Remove(SelectedHero);
+                        Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
+                        Notifica(nameof(Heroes));
                     }
                 }
                 catch (Exception ex)
