@@ -27,6 +27,18 @@ namespace GameProject
             this.Attackable = true;
         }
 
+        public HeroInstance(int id, int currentLevel, int currentExperience, int gold, bool targetable, bool attackable, int heroid)
+        {
+            this.id = id;
+            this.currentLevel = currentLevel;
+            this.currentExperience = currentExperience;
+            this.gold = gold;
+            this.Targetable = true;
+            this.Attackable = true;
+        }
+
+        public HeroInstance() { }
+
         public int Id
         {
             get { return id; }

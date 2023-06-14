@@ -20,8 +20,10 @@ namespace GameProject
         public IDatabaseConnection databaseConnection;
         public ICommand btnPlay { get; private set; }
         public ICommand btnItem { get; private set; }
+        public ICommand btnScore { get; private set; }
 
         private readonly IHeroRepository _heroRepository;
+        private readonly IHeroInstanceRepository _heroInstanceRepository;
         public ObservableCollection<Hero> Heroes { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -33,6 +35,7 @@ namespace GameProject
         public ICommand btnRemove { get; private set; }
         public ICommand btnEdit { get; private set; }
         public Hero SelectedHero { get; set; }
+        public ObservableCollection<HeroInstance> HeroInstances { get; set; }
 
         public MainWindowsVM()
         {
@@ -40,6 +43,7 @@ namespace GameProject
             {
                 this.databaseConnection = new PostgresConnection("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=sua-senha");
                 _heroRepository = new PostgresHeroRepository(databaseConnection);
+                _heroInstanceRepository = new PostgresHeroInstanceRepository(databaseConnection);
 
                 Heroes = new ObservableCollection<Hero>(_heroRepository.GetAll());
 
@@ -145,6 +149,25 @@ namespace GameProject
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+            });
+            btnScore = new RelayCommand((object _) =>
+            {
+                try
+                {
+                    HeroInstances = new ObservableCollection<HeroInstance>(_heroInstanceRepository.GetAll());
+                    foreach (HeroInstance hi in HeroInstances)
+                    {
+                        hi.Items = _heroInstanceRepository.GetAllHeroItems(hi);
+                        hi.Hero = _heroInstanceRepository.GetHero(hi);
+                    }
+                    ScoreWindow tela = new ScoreWindow();
+                    tela.DataContext = HeroInstances;
+                    tela.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while oppening the score window: {ex.Message}");
+                }
             });
         }
 

@@ -58,8 +58,9 @@
             <Button Command="{Binding btnPlay}" Content="Play" Width="150" Height="50" FontSize="20" Background="#FF8000" Foreground="White" HorizontalAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,30">
-            <Button Command="{Binding btnItem}" Content="Inventory" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White" Margin="0,0,0,0"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,30" Orientation="Horizontal">
+            <Button Command="{Binding btnScore}" Content="Score" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White" Margin="5"/>
+            <Button Command="{Binding btnItem}" Content="Inventory" Width="120" Height="40" FontSize="16" Background="#FF8000" Foreground="White" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -15,5 +15,6 @@ namespace GameProject.DataAccess
         void Update(HeroInstance hi);
         void Delete(HeroInstance hi);
         int InsertItem(HeroInstance hi, Item i);
+        List<Item> GetAllHeroItems(HeroInstance hi);
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace GameProject.DataAccess.Postgres
 {
@@ -26,7 +27,7 @@ namespace GameProject.DataAccess.Postgres
                 using (NpgsqlConnection connection = databaseConnection.CreateConnection())
                 {
                     string query = "SELECT * FROM Hero WHERE id = (SELECT hero_id FROM HeroInstance WHERE id = @Id)";
-                    return connection.QueryFirstOrDefault<Hero>(query, new { Id = hi });
+                    return connection.QueryFirstOrDefault<Hero>(query, new { Id = hi.Id });
                 }
             }
             catch (Exception ex)
@@ -158,5 +159,41 @@ namespace GameProject.DataAccess.Postgres
                 throw ex;
             }
         }
+
+        public List<Item> GetAllHeroItems(HeroInstance heroInstance)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = databaseConnection.CreateConnection())
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM item i, heroinstance hi, heroinstanceitem hii WHERE i.id = hii.item_id AND hii.hero_instance_id = hi.id AND hi.id = @HeroInstanceId;";
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@HeroInstanceId", heroInstance.Id);
+
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<Item> items = new List<Item>();
+
+                            while (reader.Read())
+                            {
+                                Item item = new Item((int)reader["id"], (string)reader["Name"], (string)reader["Description"], (string)reader["Type"], (string)reader["Attribute"], (int)reader["Value"], (int)reader["Cost"]);
+                                items.Add(item);
+                            }
+
+                            return items;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
+

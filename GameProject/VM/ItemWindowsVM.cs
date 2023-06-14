@@ -58,7 +58,8 @@ namespace GameProject
                     if (tela.DialogResult.HasValue && tela.DialogResult.Value)
                     {
                         manipulatingItem.Id = _itemRepository.Insert(manipulatingItem);
-                        Items.Add(manipulatingItem);
+                        Items = new ObservableCollection<Item>(_itemRepository.GetAll());
+                        Notifica(nameof(Items));
                     }
                 }
                 catch (Exception ex)
@@ -103,7 +104,8 @@ namespace GameProject
                     if (SelectedItem != null)
                     {
                         _itemRepository.Delete(SelectedItem);
-                        Items.Remove(SelectedItem);
+                        Items = new ObservableCollection<Item>(_itemRepository.GetAll());
+                        Notifica(nameof(Items));
                     }
                 }
                 catch (Exception ex)

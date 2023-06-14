@@ -5,73 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameProject"
         mc:Ignorable="d"
-        Title="HeroInstanceWindow" Height="450" Width="800">
-    <Grid Margin="0,0,0,0">
-        <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <Label Content="{Binding SelectedHeroInstance.Hero.Name}" Margin="0,0,0,10"/>
-                    <Image>
-
-                    </Image>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Health:"/>
-                        <Label Content="{Binding SelectedHeroInstance.Hero.Health}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Mana:"/>
-                        <Label Content="{Binding SelectedHeroInstance.Hero.Mana}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Attack:"/>
-                        <Label Content="{Binding SelectedHeroInstance.Hero.Attack}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Defense:"/>
-                        <Label Content="{Binding SelectedHeroInstance.Hero.Defense}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Level:"/>
-                        <Label Content="{Binding SelectedHeroInstance.CurrentLevel}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="Exp:"/>
-                        <Label Content="{Binding SelectedHeroInstance.CurrentExperience}" Margin="0,0,0,5"/>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
+        Title="HeroInstanceWindow" WindowStyle="None" WindowState="Maximized">
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Button Content="Save" HorizontalAlignment="Left" Click="Bnt_Save"/>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
+            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" d:ItemsSource="{d:SampleData ItemCount=5}" Background="Transparent">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border Background="Transparent">
+                                        <GridViewRowPresenter Content="{TemplateBinding Content}" TextBlock.Foreground="White" TextBlock.FontSize="16" Margin="10,0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="250"/>
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="100"/>
+                        <GridViewColumn Header="Attribute" DisplayMemberBinding="{Binding Attribute}" Width="100"/>
+                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" Width="100"/>
+                        <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Gold:" />
-                <Label Content="{Binding Gold}" Margin="0,0,0,10"/>
+                <Label Content="{Binding SelectedHeroInstance.Hero.Name}" Foreground="White" FontSize="20" Margin="0,0,10,0"/>
+                <Image Width="100" Height="100" Source="{Binding SelectedHeroInstance.Hero.ImagePath}"/>
             </StackPanel>
-            <Button Command="{Binding btnShop}" Content="Shop" HorizontalAlignment="Center" Margin="0,5,0,20" VerticalAlignment="Top" Width="100"/>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Health:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.Hero.Health}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Mana:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.Hero.Mana}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Attack:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.Hero.Attack}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Defense:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.Hero.Defense}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Level:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.CurrentLevel}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Exp:" Foreground="White"/>
+                    <Label Content="{Binding SelectedHeroInstance.CurrentExperience}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-        <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="538,0,0,207">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
-                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
-                    <GridViewColumn Header="Attribute" DisplayMemberBinding="{Binding Attribute}"/>
-                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}"/>
-                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Command="{Binding btnAdd10}" Content="+10 gold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="239,190,0,0" TextWrapping="Wrap" Text="{Binding SelectedHeroInstance.Id}" VerticalAlignment="Top"/>
 
-        <ListView ItemsSource="{Binding HeroItems}" SelectedItem="{Binding SelectedItem}" HorizontalAlignment="Right" VerticalAlignment="Bottom" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,150,0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Gold:" Foreground="White"/>
+                <Label Content="{Binding Gold}" Foreground="White" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Button Content="Shop" Command="{Binding btnShop}" HorizontalAlignment="Center" Margin="0,10,0,0" Width="100"/>
+        </StackPanel>
+
+        <Button Grid.Row="2" Command="{Binding btnAdd10}" Content="+10 gold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="50" FontSize="20" Margin="0,0,20,20"/>
     </Grid>
 </Window>

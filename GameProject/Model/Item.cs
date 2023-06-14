@@ -49,6 +49,8 @@ namespace GameProject
             this.value = i.Value;
         }
 
+        public Item() { }
+
         public int Id
         { 
             get { return id; } 

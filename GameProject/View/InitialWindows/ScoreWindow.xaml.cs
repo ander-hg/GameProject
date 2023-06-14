@@ -12,21 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GameProject.View.ManipulationWindows
+namespace GameProject.View.InitialWindows
 {
     /// <summary>
-    /// Lógica interna para ItemManipulationWindow.xaml
+    /// Lógica interna para ScoreWindow.xaml
     /// </summary>
-    public partial class ItemManipulationWindow : Window
+    public partial class ScoreWindow : Window
     {
-        public ItemManipulationWindow()
+        public ScoreWindow()
         {
             InitializeComponent();
-        }
-
-        public void bnt_Save(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
         }
     }
 }

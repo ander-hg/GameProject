@@ -31,5 +31,10 @@ namespace GameProject.View.InitialWindows
             DataContext = new HeroInstanceWindowsVM(itemRepository, heroInstanceRepository, heroInstance); ;
             InitializeComponent();
         }
+
+        public void Bnt_Save(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
