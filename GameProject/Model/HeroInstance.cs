@@ -137,7 +137,23 @@ namespace GameProject
 
         public void GainGold(int amount)
         {
-            gold += amount;
+            // Check if the addition will result in an overflow
+            if (amount > 0 && Gold > int.MaxValue - amount)
+            {
+                // Handle the overflow case, if necessary
+                Gold = int.MaxValue;
+            }
+            // Check if the subtraction will result in a value below 0
+            else if (amount < 0 && Gold < 0 - amount)
+            {
+                // Handle the case, if necessary
+                Gold = 0;
+            }
+            else
+            {
+                // Perform the operation normally
+                Gold += amount;
+            }
             OnPropertyChanged(nameof(Gold));
         }
 

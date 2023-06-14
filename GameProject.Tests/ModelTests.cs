@@ -1,8 +1,6 @@
-using GameProject.DataAccess;
-
 namespace GameProject.Tests
 {
-    public class Tests
+    public class ModelTests
     {
         private HeroInstance _heroInstance;
 
@@ -16,6 +14,8 @@ namespace GameProject.Tests
 
         [TestCase(0, 10, 10)]
         [TestCase(100, -20, 80)]
+        [TestCase(int.MaxValue, 5, int.MaxValue)]
+        [TestCase(2, -5, 0)]
         public void GainGold_IncreaseGoldByAmount(int initialGold, int amount, int expectedGold)
         {
             // Arrange

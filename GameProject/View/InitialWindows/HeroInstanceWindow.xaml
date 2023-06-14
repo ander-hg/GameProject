@@ -76,15 +76,36 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-
-        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Gold:" Foreground="White"/>
-                <Label Content="{Binding Gold}" Foreground="White" Margin="10,0,0,0"/>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Orientation="Horizontal">
+            <ListView ItemsSource="{Binding HeroItems}" d:ItemsSource="{d:SampleData ItemCount=5}" Background="Transparent">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border Background="Transparent">
+                                        <GridViewRowPresenter Content="{TemplateBinding Content}" TextBlock.Foreground="White" TextBlock.FontSize="16" Margin="10,0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="Gold:" Foreground="White"/>
+                    <Label Content="{Binding Gold}" Foreground="White" Margin="10,0,0,0"/>
+                </StackPanel>
+                <Button Content="Shop" Command="{Binding btnShop}" HorizontalAlignment="Center" Margin="0,10,0,0" Width="100"/>
             </StackPanel>
-            <Button Content="Shop" Command="{Binding btnShop}" HorizontalAlignment="Center" Margin="0,10,0,0" Width="100"/>
         </StackPanel>
-
+        
         <Button Grid.Row="2" Command="{Binding btnAdd10}" Content="+10 gold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="50" FontSize="20" Margin="0,0,20,20"/>
     </Grid>
 </Window>

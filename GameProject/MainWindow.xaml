@@ -4,9 +4,7 @@
         xmlns:converters="clr-namespace:GameProject.Converters"
         xmlns:local="clr-namespace:GameProject"
         Title="Game Title" WindowState="Maximized" Background="#222222">
-    <Window.Resources>
-        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
-    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

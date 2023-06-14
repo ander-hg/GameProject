@@ -47,3 +47,14 @@ CREATE TABLE HeroInstanceItem (
     FOREIGN KEY (item_id) REFERENCES Item(id)
 );
 
+
+INSERT INTO hero (name, health, mana, attack, defense)
+VALUES ('Warrior', 100, 50, 80, 70),
+       ('Mage', 60, 100, 50, 40),
+       ('Archer', 80, 70, 90, 60);
+
+INSERT INTO item (name, description, type, attribute, value, cost)
+VALUES ('Sword', 'A powerful sword', 'Weapon', 'Attack', 50, 100),
+       ('Staff', 'A magical staff', 'Weapon', 'Attack', 40, 120),
+       ('Armor', 'Protective armor', 'Armor', 'Defense', 60, 150),
+       ('Potion', 'Healing potion', 'Consumable', 'Health', 30, 50);
